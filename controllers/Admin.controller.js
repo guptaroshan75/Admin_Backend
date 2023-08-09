@@ -1,8 +1,6 @@
 const AdminSchema = require('../model/Admin.model');
-// const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const router = express.Router();
 
 const addAdminRegister = async (req, resp) => {
   try {

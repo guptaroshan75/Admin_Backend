@@ -52,7 +52,11 @@ const ProductSchema = new mongoose.Schema({
     productTags: {
         type: String,
         required: true,
-    }
+    },
+    published: {
+        type: String,
+        required: true,
+    },
 }, {
     timestamps: true,
 })

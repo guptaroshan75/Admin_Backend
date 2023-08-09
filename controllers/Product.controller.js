@@ -1,9 +1,5 @@
 const CategoriesModel = require("../model/Categories.model");
 const ProductModel = require("../model/Product.model");
-const fs = require('fs');
-const path = require('path');
-const multer = require('multer');
-
 
 // Get All Products
 const getAllProducts = async (req, res) => {
@@ -67,62 +63,22 @@ const getSpecificCategoryProducts = async (req, res) => {
     }
 };
 
-//Add the Products
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
+// Add the Products
+const addProducts = async (req, res) => {
+    try {
+        const newAddProducts = new ProductModel(req.body);
+        await newAddProducts.save();
+        res.status(201).json({
+            status: "Success",
+            data: newAddProducts,
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            error: error.message,
+        })
     }
-});
- 
-const upload = multer({ storage: storage });
-const addProducts =  ( upload.single('image'), (req, res, next) => {
-    const obj = {
-        productName: req.body.productName,
-        description: req.body.description,
-        image: {
-            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-            contentType: 'image/png'
-        },
-        productSKU: req.body.productSKU,
-        productBarcode: req.body.productBarcode,
-        productCategory: req.body.productCategory,
-        productDefCategory: req.body.productDefCategory,
-        price: req.body.price,
-        salePrice: req.body.salePrice,
-        productQuantity: req.body.productQuantity,
-        productSlug: req.body.productSlug,
-        productTags: req.body.productTags,
-    }
-    ProductModel.create(obj)
-    .then ((err, item) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            // item.save();
-            res.redirect('/');
-        }
-    });
-});
- 
-// const addProducts = async (req, res) => {
-//     try {
-//         const newAddProducts = new ProductModel(req.body);
-//         await newAddProducts.save();
-//         res.status(201).json({
-//             status: "Success",
-//             data: newAddProducts,
-//         })
-//     } catch (error) {
-//         res.status(400).json({
-//             status: "Failed",
-//             error: error.message,
-//         })
-//     }
-// }
+}
 
 //Add the Products with category
 // const addProducts = async (req, res) => {
@@ -150,6 +106,7 @@ const addProducts =  ( upload.single('image'), (req, res, next) => {
 // }
 
 // Update the Product
+
 const updateProduct = (req, res) => {
     ProductModel.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
