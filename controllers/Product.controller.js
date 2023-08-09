@@ -18,6 +18,33 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+//Search Product By Name
+const searchProducts = async (req, res) => {
+    try {
+        const searchProduct = await ProductModel.find({
+            "$or": [
+                { productName: { $regex: req.params.key } },
+            ]
+        })
+        if (searchProduct.length === 0) {
+            return res.status(404).json({
+                status: "Not Found",
+                message: "Product not found.",
+            });
+        }
+        res.status(201).json({
+            status: "Success",
+            data: searchProduct,
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            error: error.message,
+        })
+    }
+}
+
+
 // Get Specific Category With Products
 const getSpecificCategoryProducts = async (req, res) => {
     try {
@@ -119,6 +146,6 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = {
-    getAllProducts, addProducts,
+    getAllProducts, addProducts, searchProducts,
     getSpecificCategoryProducts, deleteProduct, updateProduct
 }
