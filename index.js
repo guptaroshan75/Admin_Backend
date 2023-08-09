@@ -7,21 +7,20 @@ const singleProductRouter = require('./routes/SingleProduct.route');
 const addToCartRouter = require('./routes/Cart.route');
 const checkOutRouter = require('./routes/Users.route');
 const adminRouter = require('./routes/Admin.route');
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
 
 if(process.env.NODE_ENV === 'developement'){
     require('dotenv').config();
 }
 
-app.set("view engine", "ejs");
-
 const app = express();
 const PORT = process.env.PORT || 4300;
 
 connectDatabase();
 
+app.set("view engine", "ejs");
 app.use(express.json());
 app.use(cors());
 
