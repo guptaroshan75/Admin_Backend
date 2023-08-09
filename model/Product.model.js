@@ -9,12 +9,13 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-       type:String,
-    },
     description: {
         type: String,
         required: true,
+    },
+    image: {
+        data: Buffer,
+        contentType: String
     },
     productSKU: {
         type: String,
@@ -25,6 +26,10 @@ const ProductSchema = new mongoose.Schema({
         required: true,
     },
     productCategory: {
+        type: String,
+        required: true,
+    },
+    productDefCategory: {
         type: String,
         required: true,
     },
