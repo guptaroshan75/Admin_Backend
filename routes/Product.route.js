@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { searchProducts, deleteProduct, updateProduct, updateProductVisble,
-    getAllProducts, addProducts, getSpecificCategoryProducts,
+    getAllProducts, addProducts, getSpecificCategoryProducts, getSpecificProducts
 } = require('../controllers/Product.controller');
 
 router.get('/getAllProducts', getAllProducts);
 
 router.get('/searchProducts/:key', searchProducts);
+
+router.get('/getSpecificProducts/:id', getSpecificProducts);
 
 // router.post('/addProducts/:id', addProducts);
 router.post('/addProducts', addProducts);

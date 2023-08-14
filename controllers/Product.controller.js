@@ -63,6 +63,22 @@ const getSpecificCategoryProducts = async (req, res) => {
     }
 };
 
+// Get Specific Products
+const getSpecificProducts = async (req, res) => {
+    try {
+        const { _id } = await ProductModel.findById(req.params.id);
+        const products = await ProductModel.find({ _id: _id });
+        res.status(200).json({
+            data: products,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "Failed",
+            error: error.message,
+        });
+    }
+};
+
 // Add the Products
 const addProducts = async (req, res) => {
     try {
@@ -164,5 +180,5 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
     getAllProducts, addProducts, searchProducts, updateProductVisble,
-    getSpecificCategoryProducts, deleteProduct, updateProduct
+    getSpecificCategoryProducts, deleteProduct, updateProduct, getSpecificProducts
 }
