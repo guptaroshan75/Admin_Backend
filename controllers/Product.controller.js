@@ -80,12 +80,46 @@ const addProducts = async (req, res) => {
     }
 }
 
+// Update the Product Visivlity
+const updateProductVisble = async (req, res) => {
+    try {
+        const updatedProduct = await ProductModel.updateOne(
+            { _id: req.params.productId },
+            { $set: { published: !req.body.published } }
+        );
+        res.status(200).json({
+            status: 'Success',
+            data: updatedProduct,
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 'Failed',
+            error: 'An error occurred while updating the product.',
+        });
+    }
+};
+
+// Update the Product
+const updateProduct = (req, res) => {
+    ProductModel.findByIdAndUpdate(req.params.id, req.body, {
+        new: true
+    })
+        .then(() => {
+            res.json({
+                msg: "Product Updated Successfully",
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.json({ error: "Failed to Perform Update Operation" });
+        });
+};
+
 //Add the Products with category
 // const addProducts = async (req, res) => {
 //     try {
 //         const { _id } = await CategoriesModel.findById(req.params.id);
 //         const { name, image, description, price } = req.body;
-
 //         const newAddProducts = await ProductModel.create({
 //             category: _id,
 //             name: name,
@@ -104,23 +138,6 @@ const addProducts = async (req, res) => {
 //         })
 //     }
 // }
-
-// Update the Product
-
-const updateProduct = (req, res) => {
-    ProductModel.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-    })
-        .then(() => {
-            res.json({
-                msg: "Product Updated Successfully",
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-            res.json({ error: "Failed to Perform Update Operation" });
-        });
-};
 
 // Delete the Poducts 
 const deleteProduct = async (req, res) => {
@@ -146,6 +163,6 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = {
-    getAllProducts, addProducts, searchProducts,
+    getAllProducts, addProducts, searchProducts, updateProductVisble,
     getSpecificCategoryProducts, deleteProduct, updateProduct
 }

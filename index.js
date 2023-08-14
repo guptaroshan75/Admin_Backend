@@ -7,9 +7,6 @@ const singleProductRouter = require('./routes/SingleProduct.route');
 const addToCartRouter = require('./routes/Cart.route');
 const checkOutRouter = require('./routes/Users.route');
 const adminRouter = require('./routes/Admin.route');
-// const fs = require('fs');
-// const path = require('path');
-
 
 if(process.env.NODE_ENV === 'developement'){
     require('dotenv').config();
@@ -21,7 +18,7 @@ const PORT = process.env.PORT || 4300;
 connectDatabase();
 
 app.set("view engine", "ejs");
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(cors());
 
 app.get('/', (req, res) => {

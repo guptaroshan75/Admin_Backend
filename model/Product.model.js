@@ -13,9 +13,8 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image: {
-        data: Buffer,
-        contentType: String
+    myImage: {
+        type: String,
     },
     productSKU: {
         type: String,
@@ -54,8 +53,8 @@ const ProductSchema = new mongoose.Schema({
         required: true,
     },
     published: {
-        type: String,
-        required: true,
+        type: Boolean,
+        default: false,
     },
 }, {
     timestamps: true,
