@@ -131,30 +131,6 @@ const updateProduct = (req, res) => {
         });
 };
 
-//Add the Products with category
-// const addProducts = async (req, res) => {
-//     try {
-//         const { _id } = await CategoriesModel.findById(req.params.id);
-//         const { name, image, description, price } = req.body;
-//         const newAddProducts = await ProductModel.create({
-//             category: _id,
-//             name: name,
-//             image: image,
-//             description: description,
-//             price: price
-//         });
-//         res.status(201).json({
-//             status: 'Success',
-//             data: newAddProducts,
-//         })
-//     } catch (error) {
-//         res.status(400).json({
-//             status: "Failed",
-//             error: error.message,
-//         })
-//     }
-// }
-
 // Delete the Poducts 
 const deleteProduct = async (req, res) => {
     try {
